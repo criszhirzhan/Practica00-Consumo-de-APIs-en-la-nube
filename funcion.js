@@ -42,11 +42,13 @@ function buscarPorTitulo() {
 function buscarPorID(id) {
     var portada = "";
     var titulo = "";
+    var anio = "";
     data.Search.forEach(movieB => {
         if (movieB.imdbID == id) {
             console.log(movieB.Title);
             portada = "<img src=" + movieB.Poster + ">";
             titulo = movieB.Title;
+            anio = movieB.Year;
         }
 
     });
@@ -54,6 +56,7 @@ function buscarPorID(id) {
 
     document.getElementById("texto1").innerHTML = titulo;
     document.getElementById("portada").innerHTML = portada;
+    document.getElementById("anioP").innerHTML = anio;
     overlay = document.getElementById('overlay');
     popup = document.getElementById('popup');
 
