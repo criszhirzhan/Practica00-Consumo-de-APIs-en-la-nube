@@ -12,10 +12,54 @@ var genero = "";
 var estreno = "";
 var director = "";
 var resumen = "";
+var numPagina = 1;
+var totalResult = 0;
 
 function buscarPorTitulo() {
+    numPagina = 1;
     var titulo = document.getElementById("nombreMovie").value;
     var detalles = "";
+    if (titulo == "") {
+        detalles = "<tr>" +
+            "<td colspan='5'>No informacion disponible...</td>" +
+            "</tr>";
+        document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
+    } else {
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                data = JSON.parse(this.responseText)
+                console.log(Math.round((data.totalResults)/10));
+                totalResult = Math.round((data.totalResults)/10);
+                desactivar();
+                data.Search.forEach(movie => {
+                    detalles += "<tr>" +
+                        "<td><a href='#'  style='text-decoration:none'     onclick=\"buscarPorID('" + movie.imdbID + "')\">'<i class='fa fa-eye'></i>'</a>" +
+                        "<td>" + movie.Title + "</td>" +
+                        "<td>" + movie.Year + "</td>" +
+                        "<td>" + movie.Type + "</td>" +
+                        "<td><img src=" + movie.Poster + "></td" +
+                        "</tr>";
+                });
+                document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
+            }
+        };
+
+        xmlhttp.open("GET", "https://www.omdbapi.com/?apikey=e38ce2e0&s=" + titulo + "&plot=full", true);
+        xmlhttp.send();
+    }
+}
+
+
+
+function paginar(numPaginaAct) {
+    var titulo = document.getElementById("nombreMovie").value;
+    var detalles = "";
+    desactivar();
     if (titulo == "") {
         detalles = "<tr>" +
             "<td colspan='5'>No informacion disponible...</td>" +
@@ -42,10 +86,15 @@ function buscarPorTitulo() {
                 document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
             }
         };
-        xmlhttp.open("GET", "https://www.omdbapi.com/?apikey=e38ce2e0&s=" + titulo + "&plot=full", true);
+
+        xmlhttp.open("GET", "https://www.omdbapi.com/?apikey=e38ce2e0&s=" + titulo + "&plot=full&page=" + numPaginaAct, true);
         xmlhttp.send();
     }
 }
+
+
+
+
 
 function DataFullMuvies(idP) {
     if (idP == "") {
@@ -59,7 +108,7 @@ function DataFullMuvies(idP) {
         } else {
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        
+
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 dataDetalles = JSON.parse(this.responseText)
@@ -110,4 +159,42 @@ function cerrarPopup() {
     popup = document.getElementById('popup');
     overlay.classList.remove('active');
     popup.classList.remove('active');
+}
+
+function siguientePagina() {
+    //  console.log(numPagina);
+    numPagina = numPagina + 1;
+    paginar(numPagina);
+}
+
+function anteriorPagina() {
+    //  console.log(numPagina);
+    numPagina = numPagina - 1;
+    paginar(numPagina);
+}
+
+function desactivar() {
+    var botonAtras = document.getElementById("atrasbtn");
+    var botonSiguiente = document.getElementById("siguientebtn");
+   
+    botonSiguiente.disabled = false;
+
+    if(numPagina==1){
+        botonAtras.disabled = true;
+    }else {
+        botonAtras.disabled = false;
+    }
+
+    if(numPagina<totalResult){
+        botonSiguiente.disabled = false;
+    }else if(numPagina==totalResult){
+        botonSiguiente.disabled = true;
+    }
+
+    if(totalResult==0){
+        botonSiguiente.disabled = true;
+        botonAtras.disabled = true;
+    }
+
+
 }
