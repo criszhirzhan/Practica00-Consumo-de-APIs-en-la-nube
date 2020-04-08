@@ -4,6 +4,8 @@ table{
   padding: 2px;
   align-items: center;
   border-color: #BDBDBD;
+  width: 666px;
+  
 }
 
 th, td {
@@ -22,6 +24,39 @@ th, td {
   color: aliceblue;
 
 }
+
+#scroll{
+  border:1px solid;
+  height:155px;
+  width:350px;
+  margin: 10px 140px 1px 140px;
+  text-align: center;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+
+#scroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#scroll::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#scroll::-webkit-scrollbar-thumb
+{
+	background-color: rgb(28, 28, 29,0.6);
+	border-radius: 10px;
+
+}
+
+
 
 .titulos{
   color: #E6E6E6;
@@ -51,6 +86,21 @@ body {
 
 #resultados{
   background-color: #424448;
+}
+
+.btn-borde {
+  width: 110px;
+  padding: .375rem .75rem;
+  border: 1px solid #007bff;
+  border-radius: .25rem;
+  color: #007bff;
+  transition: color .15s ease-in-out,
+    background-color .15s ease-in-out;
+}
+
+.btn-borde:hover, .btn-borde:active, .btn-borde:focus {
+  color: #fff;
+  background-color: #007bff;
 }
 
 .overlay {  
