@@ -1,11 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Buscar Peliculas</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="funcion.js"></script>
 </head>
 <body>
+    
+    <div class="ui main text container segment" id="container">
+
+        <div class="ui huge header">
+            Buscar Pelicula
+        </div>
+
+        <form class="ui huge form" action="/results">
+
+            <div class="field">
+
+                <label>Nombre Pelicula</label>
+
+                <div class="ui icon input">
+                    <input type="text" id="nombreMovie" name="movieName" placeholder="Inserte el nombre de la pelicula..." autocomplete="off" autofocus>
+                    <i class="search icon"></i>
+                </div>
+
+            </div>
+
+            <input type="button" value="Buscar" onclick="buscarPorTitulo()">
+
+        </form>
+        
+
+    </div>
+    <div class="ui main text container segment" id="resultados">
+        <table id="tableDatosPeliculas" class="data">
+            <thead>
+                <tr>
+                    <th>Detalles</th>
+                    <th>Titulo</th>
+                    <th>Año</th>
+                    <th>Tipo</th>
+                    <th>Portada</th>
+                </tr>
+            </thead>
+            <tbody id="tableDetallesPeliculas">
+
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="overlay" id="overlay">
+        
+        <div class="popup" id="popup">
+            <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup" onclick="cerrarPopup()"><i class="fas fa-times"></i></a>
+            <h1 id="texto1"></h1>
+            <div id="portada">
+
+            </div>
+            
+
+        </div>
+    </div>
+    
     
 </body>
 </html>
