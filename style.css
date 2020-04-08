@@ -73,10 +73,17 @@ margin-bottom: 10px;
 opacity: 0;
 
 }
+.popup h3 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	opacity: 0;
+}
 
 
 .popup.active {opacity: 1; transform: scale(1);}
 .popup.active h1 { animation: entradaTitulo .8s ease .5s forwards; }
+.popup.active h3 { animation: entradaSubtitulo .8s ease .5s forwards; }
 
 @keyframes entradaTitulo {
 from {
@@ -88,4 +95,16 @@ to {
   transform: translateY(0);
   opacity: 1;
 }
+}
+
+@keyframes entradaSubtitulo {
+	from {
+		opacity: 0;
+		transform: translateY(25px);
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
