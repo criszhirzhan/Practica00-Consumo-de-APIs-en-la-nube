@@ -1,75 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Buscar Peliculas</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="funcion.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Buscar Peliculas</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="funcion.js"></script>
 </head>
+
 <body>
-    
-    <div class="ui main text container segment" id="container">
 
-        <div class="ui huge header">
-            Buscar Pelicula
+  <div class="ui main text container segment" id="container">
+
+    <div class="ui huge header" id="TituloPagina">
+      Buscar Pelicula
+    </div>
+
+    <form class="ui huge form" action="/results">
+
+      <div class="field">
+
+        <label id="Subtitulo" >Nombre Pelicula</label>
+
+        <div class="ui icon input">
+          <input type="text" id="nombreMovie" name="movieName" placeholder="Inserte el nombre de la pelicula..."
+            autocomplete="off" autofocus>
+          <i class="search icon"></i>
         </div>
 
-        <form class="ui huge form" action="/results">
+      </div>
 
-            <div class="field">
+      <input id="botonBuscar" type="button" value="Buscar" onclick="buscarPorTitulo()">
 
-                <label>Nombre Pelicula</label>
+    </form>
 
-                <div class="ui icon input">
-                    <input type="text" id="nombreMovie" name="movieName" placeholder="Inserte el nombre de la pelicula..." autocomplete="off" autofocus>
-                    <i class="search icon"></i>
-                </div>
 
-            </div>
+  </div>
+  <div class="ui main text container segment" id="resultados">
+    <table id="tableDatosPeliculas" class="data">
+      <thead>
+        <tr>
+          <th class="titulos" >Detalles</th>
+          <th class="titulos">Titulo</th>
+          <th class="titulos">Año</th>
+          <th class="titulos">Tipo</th>
+          <th class="titulos">Portada</th>
+        </tr>
+      </thead>
+      <tbody id="tableDetallesPeliculas">
 
-            <input type="button" value="Buscar" onclick="buscarPorTitulo()">
 
-        </form>
-        
+      </tbody>
+    </table>
 
+  </div>
+
+
+
+  <div class="overlay" id="overlay">
+
+    <div class="popup" id="popup">
+      <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup" onclick="cerrarPopup()"><i
+          class="fas fa-times"></i></a>
+      <h1 id="texto1"></h1>
+      <div id="portada">
+      </div>
+      <p class="titulosDetalles">Año: <p id="anioM"></p>
+      </p><br>
+      <p class="titulosDetalles">Nominal: <p id="nomimaM"></p>
+      </p><br>
+      <p class="titulosDetalles">Estrenado: <p id="estrenoM"></p>
+      </p><br>
+      <p class="titulosDetalles">Duracion: <p id="duracionM"></p>
+      </p><br>
+      <p class="titulosDetalles">Genero: <p id="generoM"></p>
+      </p><br>
+      <p class="titulosDetalles">Director: <p id="directorM"></p>
+      </p><br>
+      <p class="titulosDetalles">Resumen: <p id="resumenM"></p>
+      </p>
     </div>
-    <div class="ui main text container segment" id="resultados">
-        <table id="tableDatosPeliculas" class="data">
-            <thead>
-                <tr>
-                    <th>Detalles</th>
-                    <th>Titulo</th>
-                    <th>Año</th>
-                    <th>Tipo</th>
-                    <th>Portada</th>
-                </tr>
-            </thead>
-            <tbody id="tableDetallesPeliculas">
+  </div>
 
 
-            </tbody>
-        </table>
-
-    </div>
-
-    <div class="overlay" id="overlay">
-        
-        <div class="popup" id="popup">
-            <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup" onclick="cerrarPopup()"><i class="fas fa-times"></i></a>
-            <h1 id="texto1"></h1>
-            <div id="portada">
-            </div>
-            <p>Año: <h3 id="anioP"></h3></p>
-
-
-        </div>
-    </div>
-    
-    
 </body>
+
 </html>
