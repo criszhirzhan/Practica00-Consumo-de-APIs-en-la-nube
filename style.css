@@ -46,7 +46,7 @@ font-family: 'Montserrat', sans-serif;
 padding: 20px;
 text-align: center;
 width: 630px;
-height: 400px;
+height: 430px;
 transition: .4s ease all;
 transform: scale(0.7);
 opacity: 0;
@@ -74,16 +74,21 @@ opacity: 0;
 
 }
 .popup h3 {
-	font-size: 36px;
+	font-size: 12px;
 	font-weight: 600;
 	margin-bottom: 10px;
 	opacity: 0;
+}
+
+p{
+  opacity: 0;
 }
 
 
 .popup.active {opacity: 1; transform: scale(1);}
 .popup.active h1 { animation: entradaTitulo .8s ease .5s forwards; }
 .popup.active h3 { animation: entradaSubtitulo .8s ease .5s forwards; }
+.popup.active p { animation: entradaSubtitulo .8s ease .5s forwards; }
 
 @keyframes entradaTitulo {
 from {
