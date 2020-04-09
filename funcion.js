@@ -217,9 +217,11 @@ function DataFullMuvies(idP) {
                 escritores = dataDetalles.Writer;
 
                console.log(dataDetalles.Ratings[0].Source);
-                if(dataDetalles.Ratings.length){
+                if(dataDetalles.Ratings.length>0){
                     for (let index = 0; index < dataDetalles.Ratings.lenght; index++) {
-                        Ratings += "<p>" +dataDetalles.Ratings[index].Source + "</p>" +"<p>" + dataDetalles.Ratings[index].Value + "</p>";
+                        console.log(dataDetalles.Ratings[index].Source);
+                        Ratings += "<p>" + dataDetalles.Ratings[index].Source + "</p>"+"<p>" + dataDetalles.Ratings[index].Value + "</p>";
+                        
                         
                     }
                 }
