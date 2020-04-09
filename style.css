@@ -1,4 +1,8 @@
 
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
 table{
   border: 1px solid #000;
   padding: 2px;
@@ -84,8 +88,36 @@ body {
   background-color: #424448;
 }
 
+
 #resultados{
   background-color: #424448;
+}
+
+#buscarPaginas{
+  background-color: #424448;
+  
+
+}
+
+.resutadosPP{
+  color: #09AAC6;
+  font-family: 'Montserrat', sans-serif;
+
+}
+
+.resultadosPaginas{
+  color: #E6E6E6;
+}
+
+#numPagBusc{
+  color: #09AAC6;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: .25rem;
+}
+
+#nombreMovie{
+  font-family: 'Montserrat', sans-serif;
+  border-radius: .25rem;
 }
 
 .btn-borde {
@@ -96,6 +128,21 @@ body {
   color: #007bff;
   transition: color .15s ease-in-out,
     background-color .15s ease-in-out;
+}
+
+
+#irPagina{
+  width: 100px;
+  border: 1px solid #007bff;
+  border-radius: .25rem;
+  color: #007bff;
+}
+
+#irPagina:hover{
+  border: 1px solid #037185;
+  background-color: #09AAC6;
+  color: whitesmoke;
+
 }
 
 .btn-borde:hover, .btn-borde:active, .btn-borde:focus {
@@ -171,8 +218,10 @@ p{
 }
 
 .titulosDetalles{
-  color: #424242;
+  color: #E3E7E7;
 }
+
+
 
 
 .popup.active {opacity: 1; transform: scale(1);}

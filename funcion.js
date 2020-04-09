@@ -3,6 +3,7 @@ var overlay;
 var popup;
 var btnCerrarPopup;
 var dataDetalles;
+
 var portada = "";
 var titulo = "";
 var anio = "";
@@ -12,12 +13,22 @@ var genero = "";
 var estreno = "";
 var director = "";
 var resumen = "";
+var pais="";
+var idima="";
+var actores="";
+var premios="";
+var escritores="";
+
+
+
+
 var numPagina = 1;
 var totalResult = 0;
 
-function buscarPorTitulo() {
+function buscarListarPeliculas() {
     numPagina = 1;
     var titulo = document.getElementById("nombreMovie").value;
+    document.getElementById("numPagBusc").innerHTML = " ";
     var detalles = "";
     if (titulo == "") {
         detalles = "<tr>" +
@@ -35,14 +46,25 @@ function buscarPorTitulo() {
                 data = JSON.parse(this.responseText)
                 console.log(Math.round((data.totalResults)/10));
                 totalResult = Math.round((data.totalResults)/10);
+                document.getElementById("totalResults").innerHTML = data.totalResults;
+                if(totalResult==0){
+                    document.getElementById("totalPaginasMost").innerHTML = 1;
+                }else{
+                    document.getElementById("totalPaginasMost").innerHTML = totalResult;
+                }
                 desactivar();
                 data.Search.forEach(movie => {
+                    var imagen = movie.Poster;
+                    if(imagen=="N/A"){
+                        imagen = "sinImagen.jpg";
+                    }
+
                     detalles += "<tr>" +
                         "<td><a href='#'  style='text-decoration:none'     onclick=\"buscarPorID('" + movie.imdbID + "')\">'<i class='fa fa-eye'></i>'</a>" +
                         "<td>" + movie.Title + "</td>" +
                         "<td>" + movie.Year + "</td>" +
                         "<td>" + movie.Type + "</td>" +
-                        "<td><img src=" + movie.Poster + "></td" +
+                        "<td><img src=" + imagen + "></td" +
                         "</tr>";
                 });
                 document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
@@ -60,6 +82,7 @@ function paginar(numPaginaAct) {
     var titulo = document.getElementById("nombreMovie").value;
     var detalles = "";
     desactivar();
+    console.log(numPagina);
     if (titulo == "") {
         detalles = "<tr>" +
             "<td colspan='5'>No informacion disponible...</td>" +
@@ -75,12 +98,62 @@ function paginar(numPaginaAct) {
             if (this.readyState == 4 && this.status == 200) {
                 data = JSON.parse(this.responseText)
                 data.Search.forEach(movie => {
+                    var imagen = movie.Poster;
+                    if(imagen=="N/A"){
+                        imagen = "sinImagen.jpg";
+                    }
                     detalles += "<tr>" +
                         "<td><a href='#'  style='text-decoration:none'     onclick=\"buscarPorID('" + movie.imdbID + "')\">'<i class='fa fa-eye'></i>'</a>" +
                         "<td>" + movie.Title + "</td>" +
                         "<td>" + movie.Year + "</td>" +
                         "<td>" + movie.Type + "</td>" +
-                        "<td><img src=" + movie.Poster + "></td" +
+                        "<td><img src=" + imagen + "></td" +
+                        "</tr>";
+                });
+                document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
+            }
+        };
+
+        xmlhttp.open("GET", "https://www.omdbapi.com/?apikey=e38ce2e0&s=" + titulo + "&plot=full&page=" + numPaginaAct, true);
+        xmlhttp.send();
+    }
+}
+
+
+function irPagina() {
+    var numPaginaAct =document.getElementById("numPagBusc").value;
+    var titulo = document.getElementById("nombreMovie").value;
+    var detalles = "";
+    if (numPaginaAct >totalResult) {
+        detalles = "<tr>" +
+            "<td colspan='5'>Numero de pagina fuera de limite..</td>" +
+            "</tr>";
+        document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
+        document.getElementById("numPagAct").innerHTML = "---";
+    } else {
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                data = JSON.parse(this.responseText)
+                numPagina = 0;
+                numPagina = parseInt(numPaginaAct) ;
+                
+                desactivar();
+                data.Search.forEach(movie => {
+                    var imagen = movie.Poster;
+                    if(imagen=="N/A"){
+                        imagen = "sinImagen.jpg";
+                    }
+                    detalles += "<tr>" +
+                        "<td><a href='#'  style='text-decoration:none'     onclick=\"buscarPorID('" + movie.imdbID + "')\">'<i class='fa fa-eye'></i>'</a>" +
+                        "<td>" + movie.Title + "</td>" +
+                        "<td>" + movie.Year + "</td>" +
+                        "<td>" + movie.Type + "</td>" +
+                        "<td><img src=" + imagen + "></td" +
                         "</tr>";
                 });
                 document.getElementById("tableDetallesPeliculas").innerHTML = detalles;
@@ -112,7 +185,12 @@ function DataFullMuvies(idP) {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 dataDetalles = JSON.parse(this.responseText)
-                portada = "<img src=" + dataDetalles.Poster + ">";
+                var imagen = dataDetalles.Poster;
+                if(imagen=="N/A"){
+                    imagen = "sinImagen.jpg";
+                }
+
+                portada = "<img src=" + imagen + ">";
                 titulo = dataDetalles.Title;
                 anio = dataDetalles.Year;
                 nominal = dataDetalles.Rated;
@@ -121,8 +199,14 @@ function DataFullMuvies(idP) {
                 estreno = dataDetalles.Released;
                 director = dataDetalles.Director;
                 resumen = dataDetalles.Plot;
-                document.getElementById("texto1").innerHTML = titulo;
+                idima = dataDetalles.Language;
+                pais = dataDetalles.Country;
+                actores = dataDetalles.Actors;
+                premios = dataDetalles.Awards;
+                escritores =dataDetalles.Writer;
+
                 document.getElementById("portada").innerHTML = portada;
+                document.getElementById("texto1").innerHTML = titulo;
                 document.getElementById("anioM").innerHTML = anio;
                 document.getElementById("nomimaM").innerHTML = nominal;
                 document.getElementById("estrenoM").innerHTML = estreno;
@@ -130,6 +214,12 @@ function DataFullMuvies(idP) {
                 document.getElementById("generoM").innerHTML = genero;
                 document.getElementById("directorM").innerHTML = director;
                 document.getElementById("resumenM").innerHTML = resumen;
+
+                document.getElementById("idiomaM").innerHTML = idima;
+                document.getElementById("paisM").innerHTML = pais;
+                document.getElementById("actoresM").innerHTML = actores;
+                document.getElementById("premiosM").innerHTML = premios;
+                document.getElementById("escritorM").innerHTML = escritores;
             }
         };
         xmlhttp.open("GET", "https://www.omdbapi.com/?i=" + idP + "&apikey=e38ce2e0&s", true);
@@ -155,6 +245,15 @@ function buscarPorID(id) {
 }
 
 function cerrarPopup() {
+    document.getElementById("texto1").innerHTML = "";
+    document.getElementById("portada").innerHTML = "";
+    document.getElementById("anioM").innerHTML = "";
+    document.getElementById("nomimaM").innerHTML = "";
+    document.getElementById("estrenoM").innerHTML = "";
+    document.getElementById("duracionM").innerHTML = "";
+    document.getElementById("generoM").innerHTML = "";
+    document.getElementById("directorM").innerHTML = "";
+    document.getElementById("resumenM").innerHTML = "";
     overlay = document.getElementById('overlay');
     popup = document.getElementById('popup');
     overlay.classList.remove('active');
@@ -162,8 +261,9 @@ function cerrarPopup() {
 }
 
 function siguientePagina() {
-    //  console.log(numPagina);
+     
     numPagina = numPagina + 1;
+    console.log(numPagina);
     paginar(numPagina);
 }
 
@@ -174,8 +274,11 @@ function anteriorPagina() {
 }
 
 function desactivar() {
+    var vacio =" ";
+    document.getElementById("numPagAct").innerHTML = vacio;
     var botonAtras = document.getElementById("atrasbtn");
     var botonSiguiente = document.getElementById("siguientebtn");
+    document.getElementById("numPagAct").innerHTML = numPagina;
    
     botonSiguiente.disabled = false;
 

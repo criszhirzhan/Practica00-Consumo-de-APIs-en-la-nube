@@ -35,12 +35,26 @@
 
       </div>
 
-      <input id="botonBuscar" type="button" value="Buscar" onclick="buscarPorTitulo()">
+      <input id="botonBuscar" type="button" value="Buscar" onclick="buscarListarPeliculas()">
 
     </form>
 
 
   </div>
+
+  <div class="ui main text container segment" id="buscarPaginas">
+    <label  class="resultadosPaginas" for="">Total Resultados</label>
+    <label class="resutadosPP" for="" id="totalResults">0</label><br>
+    <label class="resultadosPaginas" for="">Pag #: </label>
+    <label class="resutadosPP" id="numPagAct" for="">---</label>
+    <label class="resultadosPaginas" for="">Total Paginas: </label>
+    <label class="resutadosPP" id="totalPaginasMost" for="">---</label><br>
+    <input type="button" name="" id="irPagina" value="Ir" onclick="irPagina()">
+    <input id="numPagBusc" type="text" placeholder="Inserte # pagina...">
+
+  </div>
+
+
   <div class="ui main text container segment" id="resultados">
     <table id="tableDatosPeliculas" class="data">
       <thead>
@@ -91,12 +105,19 @@
         </p><br>
         <p class="titulosDetalles">Director: <p id="directorM"></p>
         </p><br>
+        <p class="titulosDetalles">Idimas: <p id="idiomaM"></p>
+        </p><br>
+        <p class="titulosDetalles">Pais: <p id="paisM"></p>
+        </p><br>
+        <p class="titulosDetalles">Actores: <p id="actoresM"></p>
+        </p><br>
+        <p class="titulosDetalles">Premios: <p id="premiosM"></p>
+        </p><br>
+        <p class="titulosDetalles">Escritores: <p id="escritorM"></p>
+        </p><br>
         <p class="titulosDetalles">Resumen: <p id="resumenM"></p>
         </p>
-        <p>FRASE </p>
-        <p>FRASE</p>
-        <p>twdvbrwelwnejrnwgejrnte</p>
-        <p>iubiu4rnovwrntgoirt</p>
+
       </div>
 
     </div>
