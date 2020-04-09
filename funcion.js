@@ -49,7 +49,9 @@ function buscarListarPeliculas() {
                 document.getElementById("totalResults").innerHTML = data.totalResults;
                 if(totalResult==0){
                     document.getElementById("totalPaginasMost").innerHTML = 1;
+                    document.getElementById("totalPaginasMostPie").innerHTML = 1;
                 }else{
+                    document.getElementById("totalPaginasMostPie").innerHTML = totalResult;
                     document.getElementById("totalPaginasMost").innerHTML = totalResult;
                 }
                 desactivar();
@@ -276,9 +278,11 @@ function anteriorPagina() {
 function desactivar() {
     var vacio =" ";
     document.getElementById("numPagAct").innerHTML = vacio;
+    document.getElementById("numPagActPie").innerHTML = vacio;
     var botonAtras = document.getElementById("atrasbtn");
     var botonSiguiente = document.getElementById("siguientebtn");
     document.getElementById("numPagAct").innerHTML = numPagina;
+    document.getElementById("numPagActPie").innerHTML = numPagina;
    
     botonSiguiente.disabled = false;
 
