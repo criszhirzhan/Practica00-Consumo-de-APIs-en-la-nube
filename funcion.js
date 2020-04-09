@@ -13,11 +13,20 @@ var genero = "";
 var estreno = "";
 var director = "";
 var resumen = "";
-var pais="";
-var idima="";
-var actores="";
-var premios="";
-var escritores="";
+var pais = "";
+var idima = "";
+var actores = "";
+var premios = "";
+var escritores = "";
+var Ratings="";
+var Metascore = "";
+var imdbRating = "";
+var imdbVotes = "";
+var Type = "";
+var DVD = "";
+var BoxOffice = "";
+var Production = "";
+var Website = "";
 
 
 
@@ -44,20 +53,20 @@ function buscarListarPeliculas() {
         xmlhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 data = JSON.parse(this.responseText)
-                console.log(Math.round((data.totalResults)/10));
-                totalResult = Math.round((data.totalResults)/10);
+                console.log(Math.round((data.totalResults) / 10));
+                totalResult = Math.round((data.totalResults) / 10);
                 document.getElementById("totalResults").innerHTML = data.totalResults;
-                if(totalResult==0){
+                if (totalResult == 0) {
                     document.getElementById("totalPaginasMost").innerHTML = 1;
                     document.getElementById("totalPaginasMostPie").innerHTML = 1;
-                }else{
+                } else {
                     document.getElementById("totalPaginasMostPie").innerHTML = totalResult;
                     document.getElementById("totalPaginasMost").innerHTML = totalResult;
                 }
                 desactivar();
                 data.Search.forEach(movie => {
                     var imagen = movie.Poster;
-                    if(imagen=="N/A"){
+                    if (imagen == "N/A") {
                         imagen = "sinImagen.jpg";
                     }
 
@@ -101,7 +110,7 @@ function paginar(numPaginaAct) {
                 data = JSON.parse(this.responseText)
                 data.Search.forEach(movie => {
                     var imagen = movie.Poster;
-                    if(imagen=="N/A"){
+                    if (imagen == "N/A") {
                         imagen = "sinImagen.jpg";
                     }
                     detalles += "<tr>" +
@@ -123,10 +132,10 @@ function paginar(numPaginaAct) {
 
 
 function irPagina() {
-    var numPaginaAct =document.getElementById("numPagBusc").value;
+    var numPaginaAct = document.getElementById("numPagBusc").value;
     var titulo = document.getElementById("nombreMovie").value;
     var detalles = "";
-    if (numPaginaAct >totalResult) {
+    if (numPaginaAct > totalResult) {
         detalles = "<tr>" +
             "<td colspan='5'>Numero de pagina fuera de limite..</td>" +
             "</tr>";
@@ -142,12 +151,12 @@ function irPagina() {
             if (this.readyState == 4 && this.status == 200) {
                 data = JSON.parse(this.responseText)
                 numPagina = 0;
-                numPagina = parseInt(numPaginaAct) ;
-                
+                numPagina = parseInt(numPaginaAct);
+
                 desactivar();
                 data.Search.forEach(movie => {
                     var imagen = movie.Poster;
-                    if(imagen=="N/A"){
+                    if (imagen == "N/A") {
                         imagen = "sinImagen.jpg";
                     }
                     detalles += "<tr>" +
@@ -188,7 +197,7 @@ function DataFullMuvies(idP) {
             if (this.readyState == 4 && this.status == 200) {
                 dataDetalles = JSON.parse(this.responseText)
                 var imagen = dataDetalles.Poster;
-                if(imagen=="N/A"){
+                if (imagen == "N/A") {
                     imagen = "sinImagen.jpg";
                 }
 
@@ -205,7 +214,25 @@ function DataFullMuvies(idP) {
                 pais = dataDetalles.Country;
                 actores = dataDetalles.Actors;
                 premios = dataDetalles.Awards;
-                escritores =dataDetalles.Writer;
+                escritores = dataDetalles.Writer;
+
+               console.log(dataDetalles.Ratings[0].Source);
+                if(dataDetalles.Ratings.length){
+                    for (let index = 0; index < dataDetalles.Ratings.lenght; index++) {
+                        Ratings += "<p>" +dataDetalles.Ratings[index].Source + "</p>" +"<p>" + dataDetalles.Ratings[index].Value + "</p>";
+                        
+                    }
+                }
+
+
+                Metascore = dataDetalles.Metascore;
+                imdbRating = dataDetalles.imdbRating;
+                imdbVotes = dataDetalles.imdbVotes;
+                Type = dataDetalles.Type;
+                DVD = dataDetalles.DVD;
+                BoxOffice = dataDetalles.BoxOffice;
+                Production = dataDetalles.Production;
+                Website = dataDetalles.Website;
 
                 document.getElementById("portada").innerHTML = portada;
                 document.getElementById("texto1").innerHTML = titulo;
@@ -222,6 +249,16 @@ function DataFullMuvies(idP) {
                 document.getElementById("actoresM").innerHTML = actores;
                 document.getElementById("premiosM").innerHTML = premios;
                 document.getElementById("escritorM").innerHTML = escritores;
+
+                document.getElementById("Metascore").innerHTML = Metascore;
+                document.getElementById("imdbRating").innerHTML = imdbRating;
+                document.getElementById("imdbVotes").innerHTML = imdbVotes;
+                document.getElementById("Type").innerHTML = Type;
+                document.getElementById("DVD").innerHTML = DVD;
+                document.getElementById("BoxOffice").innerHTML = BoxOffice;
+                document.getElementById("Production").innerHTML = Production;
+                document.getElementById("Website").innerHTML = Website;
+                document.getElementById("Ratings").innerHTML = Ratings;
             }
         };
         xmlhttp.open("GET", "https://www.omdbapi.com/?i=" + idP + "&apikey=e38ce2e0&s", true);
@@ -263,7 +300,7 @@ function cerrarPopup() {
 }
 
 function siguientePagina() {
-     
+
     numPagina = numPagina + 1;
     console.log(numPagina);
     paginar(numPagina);
@@ -276,29 +313,29 @@ function anteriorPagina() {
 }
 
 function desactivar() {
-    var vacio =" ";
+    var vacio = " ";
     document.getElementById("numPagAct").innerHTML = vacio;
     document.getElementById("numPagActPie").innerHTML = vacio;
     var botonAtras = document.getElementById("atrasbtn");
     var botonSiguiente = document.getElementById("siguientebtn");
     document.getElementById("numPagAct").innerHTML = numPagina;
     document.getElementById("numPagActPie").innerHTML = numPagina;
-   
+
     botonSiguiente.disabled = false;
 
-    if(numPagina==1){
+    if (numPagina == 1) {
         botonAtras.disabled = true;
-    }else {
+    } else {
         botonAtras.disabled = false;
     }
 
-    if(numPagina<totalResult){
+    if (numPagina < totalResult) {
         botonSiguiente.disabled = false;
-    }else if(numPagina==totalResult){
+    } else if (numPagina == totalResult) {
         botonSiguiente.disabled = true;
     }
 
-    if(totalResult==0){
+    if (totalResult == 0) {
         botonSiguiente.disabled = true;
         botonAtras.disabled = true;
     }
